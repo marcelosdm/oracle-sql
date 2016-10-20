@@ -1,4 +1,4 @@
-SELECT nr_seq_exame FROM prescr_procedimento WHERE cd_procedimento = 40316378 AND nr_sequencia = 4;
+SELECT nr_seq_exame FROM prescr_procedimento WHERE cd_procedimento = 40316378;
 
 
 UPDATE prescr_procedimento SET nr_seq_exame = 6189 WHERE nr_prescricao = 6356485 AND nr_sequencia = 2;
