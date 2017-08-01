@@ -9,14 +9,14 @@ SELECT DISTINCT
   A.QT_PROCEDIMENTO,
   A.VL_CUSTO_OPERACIONAL as vl_procedimento,
   A.DT_PRESCRICAO,
-  --OBTER_DESC_CID(A.CD_DOENCA_CID) CID,
+  OBTER_DESC_CID(A.CD_DOENCA_CID) CID/*,
          NVL(OBTER_DESC_CID(A.CD_DOENCA_CID),(SELECT MIN(OBTER_DESC_CID(Z.CD_DOENCA_CID)) 
                                   FROM PROCEDIMENTO_PACIENTE Z 
                                  WHERE A.NR_ATENDIMENTO = Z.NR_ATENDIMENTO 
                                    AND Z.CD_DOENCA_CID IS NOT NULL 
                                    )) AS CID_INFORMA,
   NVL(SUBSTR(OBTER_DESC_CID(Obter_Cid_Atendimento(q.nr_atendimento,'P')),1,100),'Não Informado') ds_cid,
-  t.ie_tipo_atendimento
+  t.ie_tipo_atendimento*/
   FROM PROCEDIMENTO_PACIENTE A, 
   ATENDIMENTO_PACIENTE T,
   CONTA_PACIENTE Q,
