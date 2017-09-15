@@ -1,4 +1,4 @@
-SELECT * FROM
+SELECT cd_material, ds_material, dt_mesano_referencia, qt_estoque, vl_total FROM
 (
 SELECT 
     a.cd_material, 
@@ -7,17 +7,26 @@ SELECT
     SUM(NVL(b.qt_consumo,0)) qt_estoque,
     SUM(NVL(b.vl_consumo,0)) vl_total
 FROM
-    material a, movto_estoque_operacao_v b
+    material a, movto_estoque_operacao_v b, classe_material c, SUBGRUPO_MATERIAL d
 WHERE
-    a.cd_material = b.cd_material
+    a.CD_MATERIAL = b.CD_MATERIAL
+AND
+    a.CD_CLASSE_MATERIAL = c.CD_CLASSE_MATERIAL
+AND
+    c.CD_SUBGRUPO_MATERIAL = d.CD_SUBGRUPO_MATERIAL
+
 AND 
     a.IE_CONSIGNADO in (1,2)  
-AND 
-    a.CD_CLASSE_MATERIAL = 1902
 AND
     b.CD_ESTABELECIMENTO = 1
 AND
-    b.dt_mesano_referencia BETWEEN TO_DATE('01/06/2017 ','dd/mm/yyyy hh24:mi:ss') AND TO_DATE('01/09/2017 ','dd/mm/yyyy hh24:mi:ss')
+    b.dt_mesano_referencia BETWEEN :d1 and :d2
+AND 
+    (a.CD_CLASSE_MATERIAL =:CLASSE or NVL(:CLASSE, 0)= 0)
+AND
+    (d.CD_SUBGRUPO_MATERIAL =:SUBGRUPO or NVL(:SUBGRUPO, 0) =0)
+AND
+    (d.CD_GRUPO_MATERIAL =:GRUPO or NVL(:GRUPO, 0) =0)
 AND NOT EXISTS
     (SELECT 1
       FROM operacao_nota x
