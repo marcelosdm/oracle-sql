@@ -1,3 +1,5 @@
+SELECT * FROM
+(
 SELECT 
     a.cd_material, 
     a.DS_MATERIAL,
@@ -27,3 +29,6 @@ GROUP BY
     
 ORDER BY 
     a.cd_material, dt_mesano_referencia DESC
+) z
+
+WHERE z.qt_estoque > 0
