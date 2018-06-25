@@ -1,0 +1,8 @@
+select * from MOVTO_CARTAO_CR_BAIXA
+where NR_SEQUENCIA = 8673;
+
+update MOVTO_CARTAO_CR_BAIXA set VL_DESPESA = '0' where NR_SEQUENCIA = 8673;
+--'3,87'
+update MOVTO_CARTAO_CR_BAIXA set VL_BAIXA = '13,00' where NR_SEQUENCIA = 8673;
+--8,09
+commit
