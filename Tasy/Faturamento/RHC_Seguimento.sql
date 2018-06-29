@@ -96,7 +96,7 @@ select
   CASE NVL(x.IE_TMO_AP, a.IE_TMO_AP) WHEN 'S' THEN 1 ELSE 0 END ||';'||
   CASE NVL(x.IE_IMUNO_AP, a.IE_IMUNO_AP) WHEN 'S' THEN 1 ELSE 0 END ||';'||
   CASE NVL(x.IE_OUTROS_AP, a.IE_OUTROS_AP) WHEN 'S' THEN 1 ELSE 0 END ||';'|| /*---------- Campo 70 ----------*/
-  NVL(to_char(x.DT_ULTIMA_NOTICIA, 'dd/mm/yyyy'), to_char(a.DT_PREENCH_FICHA, 'dd/mm/yyyy')) ||';'||
+  NVL(NVL(to_char(x.DT_OBITO, 'dd/mm/yyyy'), to_char(x.DT_ULTIMA_NOTICIA, 'dd/mm/yyyy')), NVL(to_char(a.DT_OBITO, 'dd/mm/yyyy'), to_char(a.DT_PREENCH_FICHA, 'dd/mm/yyyy')) ) ||';'||
   NVL(x.IE_SITUACAO_CLINICA, a.IE_ESTADO_PAC_FIM_TRAT)  ||';'||
   NVL(a.CD_LATERALIDADE, '3') ||';'||
   --'8' ||';'||
@@ -122,4 +122,5 @@ and a.nr_sequencia = x.NR_SEQ_FICHA_ADMISSAO(+)
 and	c.cd_pessoa_fisica = b.cd_pessoa_fisica
 and	c.ie_tipo_complemento = 1
 and	a.CD_TOPOG_TU_PRIM = d.cd_topografia(+)
+AND a.NR_PRONTUARIO = 721881
 and NVL(x.DT_ULTIMA_NOTICIA, a.DT_PREENCH_FICHA) between '01/01/2018' and '12/06/2018'
