@@ -5,8 +5,8 @@ select
   '020907'||';'||
   '2' ||';'||
   NVL(x.NR_PRONTUARIO, a.NR_PRONTUARIO) ||';'||
-  substr(obter_nome_pf(b.cd_pessoa_fisica), 0, 60) ||';'||
-  OBTER_NOME_MAE(b.cd_pessoa_fisica) ||';'||
+  regexp_replace(substr(obter_nome_pf(b.cd_pessoa_fisica), 0, 60), '[\. ,]+',' ') ||';'||
+  regexp_replace(OBTER_NOME_MAE(b.cd_pessoa_fisica), '[\. ,]+',' ') ||';'||
   case b.IE_GRAU_INSTRUCAO 
   WHEN 1 then 1
   WHEN 7 then 2
@@ -22,9 +22,9 @@ select
   to_char(b.dt_nascimento, 'dd/mm/yyyy') ||';'|| /*---------- Campo 10 ----------*/
   decode(b.ie_sexo,'M','1','F','2') ||';'||
   obter_compl_pf(b.cd_pessoa_fisica, 1, 'UF') ||';'||
-  c.DS_ENDERECO ||';'||
-  c.NR_ENDERECO ||';'||
-  c.DS_COMPLEMENTO ||';'||
+  regexp_replace(c.DS_ENDERECO, '[\. ,]+',' ') ||';'||
+  regexp_replace(c.NR_ENDERECO, '[\. ,]+',' ') ||';'||
+  regexp_replace(c.DS_COMPLEMENTO, '[\. ,]+',' ') ||';'||
   c.CD_CEP ||';'||
   c.CD_MUNICIPIO_IBGE ||';'||
   c.NR_DDD_TELEFONE ||c.NR_TELEFONE ||';'||
@@ -48,7 +48,7 @@ select
   END ||';'|| 
   to_char(a.DT_DIAGNOSTICO, 'dd/mm/yyyy') ||';'||
   a.CD_BASE_DIAG ||';'||
-  NVL(x.CD_TOPOGRAFIA, a.CD_TOPOG_TU_PRIM) ||';'||
+  regexp_replace(NVL(x.CD_TOPOGRAFIA, a.CD_TOPOG_TU_PRIM), '[\. ,]+','') ||';'||
   NVL(LTRIM(x.CD_MORFOLOGIA, 'M'), LTRIM(a.CD_MORFOLOGIA_TU_PRIM, 'M')) ||';'||
   a.CD_ESTADIO ||';'||
   LTRIM(a.CD_TUMOR_PRIMARIO, 'T') ||';'||
@@ -100,7 +100,7 @@ select
   NVL(x.IE_SITUACAO_CLINICA, a.IE_ESTADO_PAC_FIM_TRAT)  ||';'||
   NVL(a.CD_LATERALIDADE, '3') ||';'||
   --'8' ||';'||
-  a.DS_INSTITUICAO_ORIGEM ||';'||
+  regexp_replace(a.DS_INSTITUICAO_ORIGEM, '[\. ,]+',' ') ||';'||
   --'TESTE' ||';'||
   CASE NVL(x.CD_TOPOGRAFIA_RECIDIVA, a.CD_TOPOGRAFIA_RECIDIVA) WHEN '3' THEN 1 WHEN '9' THEN 1 ELSE 0 END ||';'||
   CASE NVL(x.CD_TOPOGRAFIA_RECIDIVA, a.CD_TOPOGRAFIA_RECIDIVA) WHEN '1' THEN 1 ELSE 0 END ||';'||
@@ -122,5 +122,5 @@ and a.nr_sequencia = x.NR_SEQ_FICHA_ADMISSAO(+)
 and	c.cd_pessoa_fisica = b.cd_pessoa_fisica
 and	c.ie_tipo_complemento = 1
 and	a.CD_TOPOG_TU_PRIM = d.cd_topografia(+)
-AND a.NR_PRONTUARIO = 721881
-and NVL(x.DT_ULTIMA_NOTICIA, a.DT_PREENCH_FICHA) between '01/01/2018' and '12/06/2018'
+--AND a.NR_PRONTUARIO = 735726
+and NVL(x.DT_ULTIMA_NOTICIA, a.DT_PREENCH_FICHA) between '01/09/2018' and '31/12/2018'

@@ -1,0 +1,6 @@
+select 
+  CASE WHEN a.IE_SEMINFO_AP = 'S' THEN 1
+      WHEN a.IE_NENHUM_AP = 'S' THEN 1 ELSE 0 END 
+  
+  from CAN_FICHA_ADMISSAO a
+  where a.NR_PRONTUARIO = 735945

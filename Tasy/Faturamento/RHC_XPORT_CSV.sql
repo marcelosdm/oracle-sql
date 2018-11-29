@@ -53,44 +53,51 @@ select
   NVL(a.CD_LINFONODO_REG_PAT, ' ') ||';'||
   NVL(a.CD_METASTASE_DIST_PAT, ' ') ||';'||
   NVL(a.CD_MARC_SERICO, '8') ||';'||
-  NVL(a.CD_GRAU_HISTO, '8') ||';'||
-  '8' ||';'||
+  --NVL(a.CD_GRAU_HISTO, '8') ||';'||
+ CASE 
+    WHEN a.CD_TOPOG_TU_PRIM in ('C15', 'C40', 'C41', 'C381', 'C382', 'C383', 'C47', 'C48', 'C49')
+    THEN a.CD_GRAU_HISTO
+    ELSE '8'
+  END || ';'||
+  CASE
+    WHEN a.CD_TOPOG_TU_PRIM like '%C15%' THEN '1'
+    ELSE '8'
+  END ||';'||
     /*----------- INÍCIO CAMPO 37 -------------------*/
   CASE 
         WHEN a.CD_ESTADIO = 'IA' 
             AND a.CD_TUMOR_PRIMARIO in ('T1','T2') 
             AND a.CD_LINFONODO_REGIONAL = 'N0' 
             AND a.CD_METASTASE_DISTANCIA = 'M0' 
-            AND a.CD_TOPOG_TU_PRIM = 'C15' 
             AND a.CD_TOPOG_TU_PRIM in ('C15', 'C16', 'C170', 'C171', 'C172', 'C178', 'C179', 'C18', 'C20', 'C481')
         THEN '2' 
         WHEN a.CD_ESTADIO = 'IB'
-            AND a.CD_LINFONODO_REGIONAL = 'T3'
-            AND a.CD_METASTASE_DISTANCIA = 'N0'
+            AND a.CD_TUMOR_PRIMARIO = 'T3'
+            AND a.CD_LINFONODO_REGIONAL = 'N0'
             AND a.CD_METASTASE_DISTANCIA = 'M0'
             AND a.CD_TOPOG_TU_PRIM in ('C15', 'C16', 'C170', 'C171', 'C172', 'C178', 'C179', 'C18', 'C20', 'C481')
         THEN '2'
         WHEN a.CD_ESTADIO = 'II'
-            AND a.CD_LINFONODO_REGIONAL in ('T1', 'T2')
-            AND a.CD_METASTASE_DISTANCIA = 'N0'
+            AND a.CD_TUMOR_PRIMARIO in ('T1', 'T2')
+            AND a.CD_LINFONODO_REGIONAL = 'N0'
             AND a.CD_METASTASE_DISTANCIA = 'M0'
             AND a.CD_TOPOG_TU_PRIM in ('C15', 'C481')
         THEN '1'
         WHEN a.CD_ESTADIO = 'II'
-            AND a.CD_LINFONODO_REGIONAL = 'T4'
-            AND a.CD_METASTASE_DISTANCIA = 'N0'
+            AND a.CD_TUMOR_PRIMARIO = 'T4'
+            AND a.CD_LINFONODO_REGIONAL = 'N0'
             AND a.CD_METASTASE_DISTANCIA = 'M0'
             AND a.CD_TOPOG_TU_PRIM in ('C15', 'C481')
         THEN '2'
         WHEN a.CD_ESTADIO = 'IIIA'
-            AND a.CD_LINFONODO_REGIONAL = 'T3'
-            AND a.CD_METASTASE_DISTANCIA = 'N0'
+            AND a.CD_TUMOR_PRIMARIO = 'T3'
+            AND a.CD_LINFONODO_REGIONAL = 'N0'
             AND a.CD_METASTASE_DISTANCIA = 'M0'
             AND a.CD_TOPOG_TU_PRIM in ('C15', 'C481')
         THEN '1'
         WHEN a.CD_ESTADIO = 'IIIB'
-            AND a.CD_LINFONODO_REGIONAL = 'T4'
-            AND a.CD_METASTASE_DISTANCIA = 'N0'
+            AND a.CD_TUMOR_PRIMARIO = 'T4'
+            AND a.CD_LINFONODO_REGIONAL = 'N0'
             AND a.CD_METASTASE_DISTANCIA = 'M0'
             AND a.CD_TOPOG_TU_PRIM in ('C15', 'C481')
         THEN '1'
@@ -99,32 +106,32 @@ select
             AND a.CD_TOPOG_TU_PRIM in ('C15', 'C481')
         THEN '9'
         WHEN a.CD_ESTADIO = 'I'
-            AND a.CD_LINFONODO_REGIONAL in ('T1', 'T2')
-            AND a.CD_METASTASE_DISTANCIA = 'N0'
+            AND a.CD_TUMOR_PRIMARIO in ('T1', 'T2')
+            AND a.CD_LINFONODO_REGIONAL = 'N0'
             AND a.CD_METASTASE_DISTANCIA = 'M0'
             AND a.CD_TOPOG_TU_PRIM in ('C16', 'C170', 'C171', 'C172', 'C178', 'C179', 'C18', 'C20')
         THEN '2'
         WHEN a.CD_ESTADIO = 'II'
-            AND a.CD_LINFONODO_REGIONAL = 'T3'
-            AND a.CD_METASTASE_DISTANCIA = 'N0'
+            AND a.CD_TUMOR_PRIMARIO = 'T3'
+            AND a.CD_LINFONODO_REGIONAL = 'N0'
             AND a.CD_METASTASE_DISTANCIA = 'M0'
             AND a.CD_TOPOG_TU_PRIM in ('C16', 'C170', 'C171', 'C172', 'C178', 'C179', 'C18', 'C20')
         THEN '2'
         WHEN a.CD_ESTADIO = 'IIIA'
-            AND a.CD_LINFONODO_REGIONAL = 'T1'
-            AND a.CD_METASTASE_DISTANCIA = 'N0'
+            AND a.CD_TUMOR_PRIMARIO = 'T1'
+            AND a.CD_LINFONODO_REGIONAL = 'N0'
             AND a.CD_METASTASE_DISTANCIA = 'M0'
             AND a.CD_TOPOG_TU_PRIM in ('C16', 'C170', 'C171', 'C172', 'C178', 'C179', 'C18', 'C20')
         THEN '1'
         WHEN a.CD_ESTADIO = 'IIIA'
-            AND a.CD_LINFONODO_REGIONAL = 'T4'
-            AND a.CD_METASTASE_DISTANCIA = 'N0'
+            AND a.CD_TUMOR_PRIMARIO = 'T4'
+            AND a.CD_LINFONODO_REGIONAL = 'N0'
             AND a.CD_METASTASE_DISTANCIA = 'M0'
             AND a.CD_TOPOG_TU_PRIM in ('C16', 'C170', 'C171', 'C172', 'C178', 'C179', 'C18', 'C20')
         THEN '2'
         WHEN a.CD_ESTADIO = 'IIIB'
-            AND a.CD_LINFONODO_REGIONAL in ('T2', 'T3', 'T4')
-            AND a.CD_METASTASE_DISTANCIA = 'N0'
+            AND a.CD_TUMOR_PRIMARIO in ('T2', 'T3', 'T4')
+            AND a.CD_LINFONODO_REGIONAL = 'N0'
             AND a.CD_METASTASE_DISTANCIA = 'M0'
             AND a.CD_TOPOG_TU_PRIM in ('C16', 'C170', 'C171', 'C172', 'C178', 'C179', 'C18', 'C20')
         THEN '1'
@@ -160,7 +167,8 @@ select
   CASE a.IE_TMO_ANT WHEN 'S' THEN 1 ELSE 0 END ||';'|| /*---------------- Campo 60 --------------------*/
   CASE a.IE_IMUNO_ANT WHEN 'S' THEN 1 ELSE 0 END ||';'||
   CASE a.IE_OUTROS_ANT WHEN 'S' THEN 1 ELSE 0 END ||';'||
-  CASE a.IE_NENHUM_AP WHEN 'S' THEN 1 ELSE 0 END ||';'||
+  CASE WHEN a.IE_SEMINFO_AP = 'S' THEN 1
+      WHEN a.IE_NENHUM_AP = 'S' THEN 1 ELSE 0 END ||';'||
   CASE a.IE_CIRURGI_AP WHEN 'S' THEN 1 ELSE 0 END ||';'||
   CASE a.IE_RADIO_AP WHEN 'S' THEN 1 ELSE 0 END ||';'||
   CASE a.IE_QUIMIO_AP WHEN 'S' THEN 1 ELSE 0 END ||';'||
@@ -191,6 +199,6 @@ where	a.cd_pessoa_fisica = b.cd_pessoa_fisica
 and	c.cd_pessoa_fisica = b.cd_pessoa_fisica
 and	c.ie_tipo_complemento = 1
 and	a.CD_TOPOG_TU_PRIM = d.cd_topografia(+)
---AND a.NR_PRONTUARIO = '728687'
+--AND a.NR_PRONTUARIO = '354821'
 and a.nr_registro not in ('00002705982201800831', '00002705982201800841')
-and a.DT_PREENCH_FICHA between '01/01/2018' and '07/06/2018'
+and a.DT_PREENCH_FICHA between '01/09/2018' and '31/12/2018'
