@@ -1,5 +1,4 @@
-select	
-  'A' ||';'||
+select	  'A' ||';'||
   '020907'||';'||
   '1' ||';'||
   a.NR_PRONTUARIO ||';'||
@@ -54,11 +53,12 @@ select
   NVL(a.CD_METASTASE_DIST_PAT, ' ') ||';'||
   NVL(a.CD_MARC_SERICO, '8') ||';'||
   --NVL(a.CD_GRAU_HISTO, '8') ||';'||
- CASE 
+ /*CASE 
     WHEN a.CD_TOPOG_TU_PRIM in ('C15', 'C40', 'C41', 'C381', 'C382', 'C383', 'C47', 'C48', 'C49')
     THEN a.CD_GRAU_HISTO
     ELSE '8'
-  END || ';'||
+  END || ';'||*/
+  NVL(a.CD_GRAU_HISTO, '8')|| ';'||
   CASE
     WHEN a.CD_TOPOG_TU_PRIM like '%C15%' THEN '1'
     ELSE '8'
@@ -176,7 +176,8 @@ select
   CASE a.IE_TMO_AP WHEN 'S' THEN 1 ELSE 0 END ||';'||
   CASE a.IE_IMUNO_AP WHEN 'S' THEN 1 ELSE 0 END ||';'||
   CASE a.IE_OUTROS_AP WHEN 'S' THEN 1 ELSE 0 END ||';'|| /*------------------- Campo 70 -----------------*/
-  a.DT_PREENCH_FICHA ||';'||
+  NVL(to_char(a.DT_OBITO, 'dd/mm/yyyy'), to_char(a.DT_PREENCH_FICHA, 'dd/mm/yyyy')) ||';'||
+  --a.DT_PREENCH_FICHA ||';'||
   a.IE_ESTADO_PAC_FIM_TRAT  ||';'||
   NVL(a.CD_LATERALIDADE, '8') ||';'||
   a.DS_INSTITUICAO_ORIGEM ||';'||
@@ -190,7 +191,7 @@ select
   NVL(a.CD_TOPOG_MD_SEG, ' ') ||';'|| /*---------------------- Campo 80 -------------------*/
   NVL(a.CD_TOPOG_MD_TER, ' ') ||';'||
   NVL(a.CD_TOPOG_MD_QUA, ' ') ||';'||
-  ''
+  ''    
 from	CAN_FICHA_ADMISSAO a,
 	pessoa_fisica b,
 	compl_pessoa_fisica c,
@@ -199,6 +200,6 @@ where	a.cd_pessoa_fisica = b.cd_pessoa_fisica
 and	c.cd_pessoa_fisica = b.cd_pessoa_fisica
 and	c.ie_tipo_complemento = 1
 and	a.CD_TOPOG_TU_PRIM = d.cd_topografia(+)
---AND a.NR_PRONTUARIO = '354821'
-and a.nr_registro not in ('00002705982201800831', '00002705982201800841')
-and a.DT_PREENCH_FICHA between '01/09/2018' and '31/12/2018'
+--AND a.NR_PRONTUARIO in (486330)
+--and a.nr_registro not in ('00002705982201800831', '00002705982201800841')
+and a.DT_PREENCH_FICHA between '01/09/2018' and '06/03/2019'

@@ -122,5 +122,5 @@ and a.nr_sequencia = x.NR_SEQ_FICHA_ADMISSAO(+)
 and	c.cd_pessoa_fisica = b.cd_pessoa_fisica
 and	c.ie_tipo_complemento = 1
 and	a.CD_TOPOG_TU_PRIM = d.cd_topografia(+)
-AND a.NR_PRONTUARIO in (527680, 340818, 494624, 721386, 667937, 491518)
-and NVL(x.DT_ULTIMA_NOTICIA, a.DT_PREENCH_FICHA) between '01/01/2018' and '31/12/2018'
+--AND a.NR_PRONTUARIO in (491518)--527680, 340818, 494624, 721386, 667937, 491518)
+and NVL(x.DT_ULTIMA_NOTICIA, a.DT_PREENCH_FICHA) between '01/09/2018' and '06/03/2019'
