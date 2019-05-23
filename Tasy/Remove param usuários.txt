@@ -1,0 +1,14 @@
+delete from FUNCAO_PARAM_USUARIO where nm_usuario_param in (
+
+select a.nm_usuario_param/*, b.cd_estabelecimento*/ from FUNCAO_PARAM_USUARIO a, usuario b
+where a.NM_USUARIO_PARAM = b.NM_USUARIO
+and a.CD_FUNCAO = 913
+and b.CD_ESTABELECIMENTO = 1
+--and a.nr_sequencia = 4
+
+
+) 
+
+and CD_FUNCAO = 913
+;
+

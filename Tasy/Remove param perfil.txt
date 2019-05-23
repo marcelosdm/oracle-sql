@@ -1,0 +1,7 @@
+delete from FUNCAO_PARAM_PERFIL where cd_perfil in (
+select a.cd_perfil from FUNCAO_PARAM_PERFIL a, PERFIL b
+where a.CD_PERFIL = b.CD_PERFIL
+and cd_funcao = 913
+and b.CD_ESTABELECIMENTO = 1
+and b.cd_perfil not in (2017, 1857))
+and cd_funcao = 913 ;
